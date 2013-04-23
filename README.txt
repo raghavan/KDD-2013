@@ -1,0 +1,5 @@
+Microsoft Academic Search is an open platform that provides a variety of metrics and experiences for the research community, in addition to literature search. It covers more than 50 million publications and over 19 million authors across a variety of domains, with updates added each week. One of the main challenges of providing this service is caused by author-name ambiguity. On one hand, there are many authors who publish under several variations of their own name.  On the other hand, different authors might share a similar or even the same name.
+
+As a result, the profile of an author with an ambiguous name tends to contain noise, resulting in papers that are incorrectly assigned to him or her. This KDD Cup task challenges participants to determine which papers in an author profile were truly written by a given author.
+
+This program evaluates the Mean Average Precision.
