@@ -10,11 +10,10 @@ from sklearn.decomposition import SparsePCA
 from sklearn.feature_extraction.text import TfidfTransformer
 
 def writeToFile(fileName,xTestAuthorPaperids,yPred):
-    outputFile = open(fileName, 'w+')
+    outputFile = open("../files/"+fileName+".csv", 'w+')
     rows = len(yPred)
-    outputFile.write("AuthorId,PaperId,Label\n");
     for i in range(0,rows):
-        outputFile.write(str(xTestAuthorPaperids[i:0]) +","+str(xTestAuthorPaperids[i:1])+","+str(yPred[i])+"\n")
+        outputFile.write(str(int(xTestAuthorPaperids[i,0])) +","+str(int(xTestAuthorPaperids[i,1]))+","+str(int(yPred[i]))+"\n")
     outputFile.close()
     
 class DataModeller:
@@ -31,16 +30,12 @@ class DataModeller:
         xTrain =  trainingData[:, 2:trainingData.shape[1]-1]
         yTrain = trainingData[:,trainingData.shape[1]-1]
                   
-        xTest = testData[:, 2:testData.shape[1] -1]
-        xTestAuthoPaperIds = testData[:, 0:2]
+        xTest = testData[:, 2:testData.shape[1]]
+        xTestAuthorPaperIds = testData[:, 0:2]
         
         
         print "Training dimension -> ",xTrain.shape
         print "Testing dimension ->  ",xTest.shape
-        
-        #xTrain,xTest = transform(xTrain,yTrain,xTest)        
-        print "Reduced Training dimension -> ",xTrain.shape
-        print "Reduced Testing dimension ->  ",xTest.shape
         
 
         #Logistic Regression classification
@@ -48,7 +43,7 @@ class DataModeller:
         logreg = linear_model.LogisticRegression(penalty="l1",C=0.5,intercept_scaling=2);
         logreg.fit(xTrain,yTrain);
         yPred = logreg.predict(xTest);                
-        writeToFile("files/logRegPredict.csv", xTestAuthorPaperids, yPred);                        
+        writeToFile("logRegPredict", xTestAuthorPaperIds, yPred);                        
       
                
         
@@ -60,7 +55,7 @@ class DataModeller:
         svmclf = svm.SVC(C=8.0,gamma=0.10,kernel='rbf',probability=True,shrinking=True);
         svmclf.fit(xTrain,yTrain);
         yPred = svmclf.predict(xTest);
-        writeToFile("files/svmPredict.csv", xTestAuthorPaperids, yPred);
+        writeToFile("svmPredict", xTestAuthorPaperIds, yPred);
         
 if __name__ == '__main__':
     if len(sys.argv) < 2:
